@@ -35,6 +35,13 @@ module.exports = {
         "sdm-steel-blue-500": "#68A2D8",
         "sdm-steel-blue-300": "#87B5E0",
         "sdm-steel-blue-100": "#A5C7E8",
+      },
+      minHeight: {
+        "xl": "36rem",
+        "2xl": "42rem",
+        "3xl": "48rem",
+        "4xl": "54rem",
+        "5xl": "60rem",
       }
     },
   },
