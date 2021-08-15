@@ -2,18 +2,24 @@ import Image from "next/image";
 import * as React from "react"
 
 interface Props {
-  size: number
+  size: string;
+  className: string | null;
 }
 
-const SummerbudAvatar: React.FC<Props> = ({ size }) => {
+const SummerbudAvatar: React.FC<Props> = ({ size, className }) => {
   return (
-    <Image
-      className="rounded-full object-contain"
-      src="/me.jpeg"
-      alt="summerbud's avatar"
-      width={size}
-      height={size}
-    />
+    <div
+      className="relative"
+    >
+      <Image
+        className={"rounded-full object-contain " + className}
+        src="/me.jpeg"
+        alt="summerbud's avatar"
+        width={size}
+        height={size}
+      />
+    </div>
+
   );
 };
 
