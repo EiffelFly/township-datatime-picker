@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "sdm-cg-50": "#616E7C",
+        "sdm-cg-50": "#F5F7FA",
         "sdm-cg-100": "#E4E7EB",
         "sdm-cg-200": "#CBD2D9",
         "sdm-cg-300": "#9AA5B1",
