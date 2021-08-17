@@ -1,8 +1,10 @@
 import { useEffect, useState, FC } from "react";
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import dayjsBusinessDays from "dayjs-business-days";
+import { CalendarCheckIcon } from "./icon/CalendarCheckIcon";
+import { CalandarXIcon } from "./icon/CalendarXIcon";
 
 dayjs.extend(dayjsBusinessDays);
 dayjs.extend(utc);
@@ -12,19 +14,25 @@ interface Props {
   weekStart: string;
   date: Dayjs;
   inviteeTimeZone: any;
+  neededSlots: number;
 }
 
-const DatePicker: FC<Props> = ({ weekStart, date, inviteeTimeZone }) => {
+const DatePicker: FC<Props> = ({
+  weekStart,
+  date,
+  inviteeTimeZone,
+  neededSlots,
+}) => {
   const [calendar, setCalendar] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState<number>();
   const [selectedDate, setSelectedDate] = useState<Dayjs>();
 
   // Dayjs have some strange import typescript issue
-  // If we directly write dayjs().month(selectedMonth).format("MMMM") in template 
+  // If we directly write dayjs().month(selectedMonth).format("MMMM") in template
   // It will raise dayjs__WEBPACK_IMPORTED_MODULE_2___default(...)(...).month(...).format is not a function Error
   const [monthString, setMonthString] = useState<string>();
   const [yearString, setYearString] = useState<string>();
-  
+  const [selectedSlots, setSelectedSlots] = useState<number>();
 
   useEffect(() => {
     if (date) {
@@ -44,7 +52,7 @@ const DatePicker: FC<Props> = ({ weekStart, date, inviteeTimeZone }) => {
     const inviteeDate = dayjs().tz(inviteeTimeZone).month(selectedMonth);
 
     setMonthString(dayjs().month(selectedMonth).format("MMMM"));
-    setYearString(dayjs().month(selectedMonth).format("YYYY"))
+    setYearString(dayjs().month(selectedMonth).format("YYYY"));
 
     // Setup calendar
     const daysInMonth = inviteeDate.daysInMonth();
@@ -113,6 +121,22 @@ const DatePicker: FC<Props> = ({ weekStart, date, inviteeTimeZone }) => {
         ))}
       </div>
       <div className="grid grid-cols-7 gap-2 text-center">{calendar}</div>
+      <div className="font-sans text-base font-normal mt-8 flex flex-row gap-x-4">
+        {selectedSlots >= neededSlots ? (
+          <CalendarCheckIcon className={"text-sdm-cg-200 h-6 w-6"} />
+        ) : (
+          <CalandarXIcon className={"text-sdm-scarlet-500 h-6 w-6"} />
+        )}
+        {selectedSlots >= neededSlots ? (
+          <div className="text-sdm-cg-200">Awesome 🎉</div>
+        ) : (
+          <div
+            className="text-sdm-scarlet-500"
+          >
+            Please select more time slots
+          </div>
+        )}
+      </div>
     </div>
   );
 };
